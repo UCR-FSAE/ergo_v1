@@ -38,34 +38,81 @@ public:
 	void setIDHigh(uint32_t);
 
 	/* Returns the filter identification number (MSBs for a 32-bit configuration, first
-	 * for a 16-bit configuration).*/
+	 * for a 16-bit configuration). */
 	uint32_t getIDHigh();
 
+	/* Specifies the filter identification number (LSBs for a 32-bit
+	 * configuration, second one for a 16-bit configuration).
+	 * This parameter must be a number between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 	void setIDLow(uint32_t);
 
+	/* Returns the filter identification number (LSBs for a 32-bit configuration, second
+	 * for a 16-bit configuration). */
 	uint32_t getIDLow();
 
+	/* Specifies the filter mask number or identification number, depending on the mode (MSBs for a 32-bit
+	 * configuration, first one for a 16-bit configuration).
+	 * This parameter must be a number between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 	void setMaskIDHigh(uint32_t);
+
+	/* Returns the filter mask number/identification number (MSBs for a 32-bit
+	 * configuration, first one for a 16-bit configuration). */
 	uint32_t getMaskIDHigh();
+
+	/* Specifies the filter mask number or identification number, depending on the mode (LSBs for a 32-bit
+	 * configuration, second for a 16-bit configuration).
+	 * This parameter must be a number between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 	void setMaskIDLow(uint32_t);
+
+	/* Returns the filter mask number/identification number (LSBs for a 32-bit
+	 * configuration, second for a 16-bit configuration). */
 	uint32_t getMaskIDLow();
+
+	/* Sets the FIFO number that a particular CAN will be using. The parameter will
+	 * be 0 (for FIFO0) or 1 (for FIFO1)*/
 	void setFIFO(uint32_t);
+
+	/* Returns the FIFO number for a particular CAN instance.*/
 	uint32_t getFIFO();
+
+	/* Specifies the filter bank that will be initialized for a CAN instance. For a single CAN instance,
+	 * the parameter must be between 0 and 13. If it is a double CAN instance, the parameter can be between
+	 * 0 and 14. */
 	void setBank(uint32_t);
+
+	/* Returns the filter bank that is used for a particular CAN instance. */
 	uint32_t getBank();
 
+	/* Sets the mode of a CAN instance. If true is passed in, the mode will be Mask mode. Otherwise,
+	 * the mode will be list mode. */
 	void setMode(bool);
+
+	/* Returns the mode of a CAN instance. If true is returned, then the mode is Mask. Otherwise, the mode
+	 * is list mode. */
 	bool getMode();
-	/* Sets the scale of the filters to either one 32 bit filterbank or 2 16 bit filterbanks.
+
+	/* Sets the scale of the filters to either one 32-bit filter bank or two 16-bit filter banks.
 	 * This function only accepts inputs of 16 or 32, representing the size of a filter.
-	 * i.e. If 16 is input, then there are two 16 bit filterbanks.*/
+	 * i.e. If 16 is input, then there are two 16 bit filter banks.*/
 	void setScale(uint32_t);
+
 	/* Returns the scale of the filters.
 	 * Returns either 16 or 32, representing the size of a filter.*/
 	uint32_t getScale();
+
+	/* Sets the CAN activation status. If true is passed in, then the activation status is on. Otherwise,
+	 * the activation status will be toggled off. */
 	void setActivation(bool);
+
+	/* Returns the activation status of a CAN instance. If the true is returned, the CAN is active. Otherwise,
+	 * the CAN is inactive. */
 	bool getActivation();
+
+	/* Sets the beginning filter for the slave instance of CAN. The parameter must be a number between 0 and 27.
+	 * This function and the slaveFilter in general is meaningless in a single CAN setup. */
 	void setSlaveFilters(uint32_t);
+
+	/* Returns the beginning of the slave filters for a dual CAN instance. */
 	uint32_t getSlaveFilters();
 
 	virtual ~Filter_Config();

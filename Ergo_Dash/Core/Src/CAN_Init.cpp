@@ -16,6 +16,9 @@ CAN_HandleTypeDef * CAN_Init::CAN_Initialize(CAN_HandleTypeDef *phCAN, Filter_Co
 	//2. Initialize CAN Peripheral with HAL_CAN_Init()
 	HAL_CAN_Init(phCAN);
 	//3. Configure the reception filters with HAL_CAN_ConfigFilter()
+	const CAN_FilterTypeDef constConfig = fConfig->FilterConfig;
+	HAL_CAN_ConfigFilter(phCAN, &constConfig);
+
 	return phCAN;
 }
 

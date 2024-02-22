@@ -89,6 +89,8 @@ void Filter_Config::setFIFO(uint32_t fifoNumber) {
 uint32_t Filter_Config::getFIFO() {
 	return FilterConfig.FilterFIFOAssignment;
 }
+
+// FIXME: Use a parent class. to determine whether or not the max will be 13 or 27.
 void Filter_Config::setBank(uint32_t bankNumber) {
 	if (bankNumber > 0 && bankNumber < 27) {
 		FilterConfig.FilterBank = bankNumber;

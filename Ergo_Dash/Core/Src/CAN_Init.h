@@ -30,7 +30,7 @@ public:
 	CAN_HandleTypeDef * CAN_Initialize(CAN_HandleTypeDef *hCAN, Filter_Config *fConfig);
 	// Not so sure what to do with the destructor yet.
 	virtual ~CAN_Init();
-	// Deinitializes CAN.
+	// Deinitializes CAN, probably in case the CAN need to be switched from master to slave.
 	void CAN_deInit();
 	// Create a function to configure the filter set up. Returns a pointer.
 	// This pointer will be passed in Initialize for filter configuration.
