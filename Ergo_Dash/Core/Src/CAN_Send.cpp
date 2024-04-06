@@ -77,10 +77,7 @@ const int CAN_Send::getLength() {
 
 /*Sets the TxData payload array to whatever data is passed in.
  * FIXME: consider implementing an is in bounds function, in case the data is too large.
- * FIXME: consider implementing a message class, so that we can generate new classes while
- * using the same CAN_Send object.
  * FIXME: Is there a faster way to do this than a for loop?*/
-// also lmfao lowkey why does this also work
 void CAN_Send::setTxData(uint8_t data[]) {
 	for (unsigned i = 0; i < TxHeader.DLC; i++) {
 		TxData[i] = data[i];
@@ -88,7 +85,6 @@ void CAN_Send::setTxData(uint8_t data[]) {
 }
 
 /*Returns the TxData array by reference.*/
-// lmfao lowkey why does this work
 uint8_t & CAN_Send::getData() {
 	return *(TxData);
 }

@@ -5,8 +5,8 @@
  *      Author: imjus
  */
 
-#ifndef SRC_CAN_Send_H_
-#define SRC_CAN_Send_H_
+#ifndef INC_CAN_Send_H_
+#define INC_CAN_Send_H_
 
 #ifdef __cplusplus
 extern "C" {
