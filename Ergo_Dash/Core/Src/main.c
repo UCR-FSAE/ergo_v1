@@ -93,6 +93,11 @@ int main(void)
   MX_CAN2_Init();
   /* USER CODE BEGIN 2 */
 
+  // This is where filters should be configured and implemented into the different CAN instances.
+  // This should be done for both hcan1 and hcan2.
+
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

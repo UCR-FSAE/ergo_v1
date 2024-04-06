@@ -5,8 +5,8 @@
  *      Author: imjus
  */
 
-#ifndef SRC_FILTER_CONFIG_H_
-#define SRC_FILTER_CONFIG_H_
+#ifndef INC_FILTER_CONFIG_H_
+#define INC_FILTER_CONFIG_H_
 
 /* This includes all stm32f5xx.h files, even the intermediary ones.
  * The files that this class will utilize the most the ones concerning CAN.*/
@@ -114,6 +114,9 @@ public:
 
 	/* Returns the beginning of the slave filters for a dual CAN instance. */
 	uint32_t getSlaveFilters();
+
+	/* Implements this filter configuration into a particular CAN instance. */
+	bool implementFilter(CAN_HandleTypeDef *phCAN);
 
 	virtual ~Filter_Config();
 };

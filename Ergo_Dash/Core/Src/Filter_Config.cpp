@@ -7,8 +7,10 @@
 
 #include "Filter_Config.h"
 
+// Default constructor. Does nothing at the moment.
 Filter_Config::Filter_Config() {}
 
+// Parameterized constructor. Uses the defined setters to configure the FilterTypeDef.
 Filter_Config::Filter_Config(uint32_t highID, uint32_t lowID, uint32_t highMaskID, uint32_t lowMaskID,
 		uint32_t FIFONumber, uint32_t bankNumber, bool isMaskMode, uint32_t filterScale,
 		bool isActive, uint32_t slaveFilterStart) {
@@ -24,6 +26,7 @@ Filter_Config::Filter_Config(uint32_t highID, uint32_t lowID, uint32_t highMaskI
 	setSlaveFilters(slaveFilterStart);
 }
 
+// Default Destructor. Does nothing at the moment.
 Filter_Config::~Filter_Config() {
 	// TODO Auto-generated destructor stub
 }
@@ -57,24 +60,38 @@ uint32_t Filter_Config::getIDLow() {
 	return FilterConfig.FilterIdLow;
 }
 
+/* Specifies the filter mask number or identification number, depending on the mode (MSBs for a 32-bit
+ * configuration, first one for a 16-bit configuration).
+ * This parameter must be a number between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 void Filter_Config::setMaskIDHigh(uint32_t maskHighID) {
 	if (maskHighID > 0x0000 && maskHighID < 0xFFFF) {
 		FilterConfig.FilterMaskIdHigh = maskHighID;
 	}
 }
+/* Returns the filter mask number/identification number (MSBs for a 32-bit
+ * configuration, first one for a 16-bit configuration). */
 uint32_t Filter_Config::getMaskIDHigh() {
 	return FilterConfig.FilterMaskIdHigh;
 
 }
+
+/* Specifies the filter mask number or identification number, depending on the mode (LSBs for a 32-bit
+ * configuration, second for a 16-bit configuration).
+ * This parameter must be a number between Min_Data = 0x0000 and Max_Data = 0xFFFF. */
 void Filter_Config::setMaskIDLow(uint32_t maskLowID) {
 	if (maskLowID > 0x0000 && maskLowID < 0xFFFF) {
 		FilterConfig.FilterMaskIdLow = maskLowID;
 	}
 }
+
+/* Returns the filter mask number/identification number (LSBs for a 32-bit
+ * configuration, second for a 16-bit configuration). */
 uint32_t Filter_Config::getMaskIDLow() {
 	return FilterConfig.FilterMaskIdLow;
 }
 
+/* Sets the FIFO number that a particular CAN will be using. The parameter will
+ * be 0 (for FIFO0) or 1 (for FIFO1)*/
 void Filter_Config::setFIFO(uint32_t fifoNumber) {
 	if (fifoNumber == 0) {
 		FilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
@@ -86,31 +103,42 @@ void Filter_Config::setFIFO(uint32_t fifoNumber) {
 		return;
 	}
 }
+
+/* Returns the FIFO number for a particular CAN instance.*/
 uint32_t Filter_Config::getFIFO() {
 	return FilterConfig.FilterFIFOAssignment;
 }
 
-// FIXME: Use a parent class. to determine whether or not the max will be 13 or 27.
+/* Specifies the filter bank that will be initialized for a CAN instance. For a single CAN instance,
+ * the parameter must be between 0 and 13. If it is a double CAN instance, the parameter can be between
+ * 0 and 14. */
+// FIXME: Determine how change the bounds of the bankNumber depending on if the set up is single or dual.
 void Filter_Config::setBank(uint32_t bankNumber) {
 	if (bankNumber > 0 && bankNumber < 27) {
 		FilterConfig.FilterBank = bankNumber;
 	}
 }
+
+/* Returns the filter bank that is used for a particular CAN instance. */
 uint32_t Filter_Config::getBank() {
 	return FilterConfig.FilterBank;
 }
 
+/* Sets the beginning filter for the slave instance of CAN. The parameter must be a number between 0 and 27.
+ * This function and the slaveFilter in general is meaningless in a single CAN setup. */
 void Filter_Config::setSlaveFilters(uint32_t slaveFilterStart) {
 	if (slaveFilterStart > 0 && slaveFilterStart < 27) {
 		FilterConfig.SlaveStartFilterBank = slaveFilterStart;
 	}
 }
+
+/* Returns the beginning of the slave filters for a dual CAN instance. */
 uint32_t Filter_Config::getSlaveFilters() {
 	return FilterConfig.SlaveStartFilterBank;
 }
 
-/* Sets the filter mode to Mask mode or to list mode. If true is passed in, the mode will be set to mask.
- * Otherwise, the mode will be set to list. */
+/* Sets the mode of a CAN instance. If true is passed in, the mode will be Mask mode. Otherwise,
+ * the mode will be list mode. */
 void Filter_Config::setMode(bool isMaskMode) {
 	if (isMaskMode) {
 		FilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
@@ -120,8 +148,8 @@ void Filter_Config::setMode(bool isMaskMode) {
 	}
 }
 
-/* Returns the filter mode of the filter. If true is returned, the filter is in mask mode. Otherwise, the mode is
- * in list. */
+/* Returns the mode of a CAN instance. If true is returned, then the mode is Mask. Otherwise, the mode
+ * is list mode. */
 bool Filter_Config::getMode() {
 	return FilterConfig.FilterMode == CAN_FILTERMODE_IDMASK;
 }
@@ -166,4 +194,11 @@ void Filter_Config::setActivation(bool state) {
 /* Returns the activation status of the filter. */
 bool Filter_Config::getActivation() {
 	return FilterConfig.FilterActivation == 1;
+}
+
+/* Implements the current filter configuration into an instance of CAN. */
+bool Filter_Config::implementFilter(CAN_HandleTypeDef *phCAN) {
+	const CAN_FilterTypeDef constConfig = this->FilterConfig;
+	HAL_StatusTypeDef ok = HAL_CAN_ConfigFilter(phCAN, &constConfig);
+	return ok == HAL_OK;
 }

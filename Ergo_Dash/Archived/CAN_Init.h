@@ -11,8 +11,8 @@
  * This class should not be considered an object, but rather a set of
  * functions for the intialization process.*/
 
-#ifndef SRC_CAN_INIT_H_
-#define SRC_CAN_INIT_H_
+#ifndef INC_CAN_INIT_H_
+#define INC_CAN_INIT_H_
 
 
 /*This includes all stm32f5xx.h files, even the intermediary ones.
@@ -23,15 +23,15 @@
 class CAN_Init {
 public:
 	CAN_HandleTypeDef *hCAN;
-
 	//Default Constructor (Does nothing)
 	CAN_Init();
-	// Initializes CAN.
-	CAN_HandleTypeDef * CAN_Initialize(CAN_HandleTypeDef *hCAN, Filter_Config *fConfig);
-	// Not so sure what to do with the destructor yet.
-	virtual ~CAN_Init();
+	// Initializes CAN, to be more robust and user friendly than the generated constructor in main.c.
+	CAN_HandleTypeDef * CAN_Initialize(CAN_HandleTypeDef *phCAN, string instance, uint_32 prescaler, string mode,  Filter_Config *fConfig);
 	// Deinitializes CAN, probably in case the CAN need to be switched from master to slave.
-	void CAN_deInit();
+	void CAN_DeInit(CAN_HandleTypeDef *phCAN);
+	// Default destructor.
+	~CAN_Init();
+
 	// Create a function to configure the filter set up. Returns a pointer.
 	// This pointer will be passed in Initialize for filter configuration.
 };
