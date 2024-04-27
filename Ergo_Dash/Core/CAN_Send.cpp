@@ -15,7 +15,7 @@ CAN_Send::CAN_Send(){};
  * isDataFrame: bool for if the message RTR type is a Data Frame or a Remote Frame.
  * len: The length of the data array.
  * data[]: The data payload of the message.*/
-CAN_Send::CAN_Send(bool isSTD, bool isDataFrame, int len, uint8_t data[]) {
+CAN_Send::CAN_Send(bool isSTD, bool isDataFrame, int len, uint8_t* data) {
 	setIDType(isSTD);
 	setRTRType(isDataFrame);
 	setLength(len);

@@ -42,7 +42,7 @@ class CAN_Send {
 		CAN_Send();
 
 		// FIXME: Implement a parameterized constructor.
-		CAN_Send(bool, bool, int, uint8_t *);
+		CAN_Send(bool, bool, int, uint8_t*);
 
 
 		// Destructor
