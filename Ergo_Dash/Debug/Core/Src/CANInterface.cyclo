@@ -1,0 +1,3 @@
+../Core/Src/CANInterface.cpp:11:1:CANInterface::CANInterface()	1
+../Core/Src/CANInterface.cpp:17:1:CANInterface::~CANInterface()	1
+../Core/Src/CANInterface.cpp:17:1:virtual CANInterface::~CANInterface()	1
