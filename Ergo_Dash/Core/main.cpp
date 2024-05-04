@@ -31,7 +31,7 @@ using namespace std;
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+UART_HandleTypeDef huart4;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -46,12 +46,11 @@ using namespace std;
 
 /* Private variables ---------------------------------------------------------*/
 CAN_HandleTypeDef hcan1;
-
 SPI_HandleTypeDef hspi1;
 SPI_HandleTypeDef hspi2;
 
 /* USER CODE BEGIN PV */
-
+uint8_t tx_buffer[32] = "While Loop Test /r/n";
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,6 +59,7 @@ static void MX_GPIO_Init(void);
 static void MX_CAN1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_SPI2_Init(void);
+static void MX_UART4_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -100,6 +100,7 @@ int main(void)
   MX_CAN1_Init();
   MX_SPI1_Init();
   MX_SPI2_Init();
+  MX_UART4_Init();
   /* USER CODE BEGIN 2 */
 
   // This is where filters should be configured and implemented into the different CAN instances.
@@ -109,7 +110,6 @@ int main(void)
   Filter_Config filter = Filter_Config(1, 0, 1, 0, 0, 0, true, 16, true, 0);
   // Implements the filter into the can instance. Fails the program if it is unsuccessful.
   if (filter.implementFilter(&hcan1)!= true) {return 1;}
-  cout << "Successful filter configuration and implementation" << endl;
 
   // Declare new objects of of each can type.
 
@@ -129,9 +129,20 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  //TODO: Implement UART print to ensure that this is working rather than using
+	  // the couts.
+	  //TODO: Implement SPI to translate the values read in from CAN and output it into the
+	  // LED Matrix. The Matrix should account for Battery, Speed, fire hazard, etc
+
+
+	  HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_13);
+	  HAL_Delay(100); // Delay by 100 ms
+
+
 	  // FIXME: TEST READ HERE
 	  if (hcan1Receive.GetMessages()) {
-		  cout << "Successful Read." << endl;
+		  HAL_UART_Transmit(&huart4, tx_buffer, 32, 10);
+		  HAL_Delay(1000);
 	  }
   }
   /* USER CODE END 3 */
@@ -252,6 +263,35 @@ static void MX_SPI1_Init(void)
   /* USER CODE END SPI1_Init 2 */
 
 }
+
+static void MX_UART4_Init(void)
+{
+
+  /* USER CODE BEGIN UART4_Init 0 */
+
+  /* USER CODE END UART4_Init 0 */
+
+  /* USER CODE BEGIN UART4_Init 1 */
+
+  /* USER CODE END UART4_Init 1 */
+  huart4.Instance = UART4;
+  huart4.Init.BaudRate = 115200;
+  huart4.Init.WordLength = UART_WORDLENGTH_8B;
+  huart4.Init.StopBits = UART_STOPBITS_1;
+  huart4.Init.Parity = UART_PARITY_NONE;
+  huart4.Init.Mode = UART_MODE_TX_RX;
+  huart4.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart4.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart4) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN UART4_Init 2 */
+
+  /* USER CODE END UART4_Init 2 */
+
+}
+
 
 /**
   * @brief SPI2 Initialization Function
