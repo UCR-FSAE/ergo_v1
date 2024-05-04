@@ -1,0 +1,2 @@
+../Core/CAN_Receive.cpp:11:6:bool CAN_Receive::ActivateNotifications()	1
+../Core/CAN_Receive.cpp:17:6:bool CAN_Receive::GetMessages()	2

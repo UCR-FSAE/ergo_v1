@@ -1,0 +1,11 @@
+../Core/CAN_Send.cpp:11:1:CAN_Send::CAN_Send()	1
+../Core/CAN_Send.cpp:18:1:CAN_Send::CAN_Send(bool, bool, int, uint8_t*)	1
+../Core/CAN_Send.cpp:28:6:void CAN_Send::setIDType(bool)	2
+../Core/CAN_Send.cpp:40:12:const bool CAN_Send::getIDType()	1
+../Core/CAN_Send.cpp:48:6:void CAN_Send::setRTRType(bool)	2
+../Core/CAN_Send.cpp:60:12:const bool CAN_Send::getRTRType()	1
+../Core/CAN_Send.cpp:67:6:void CAN_Send::setLength(int)	3
+../Core/CAN_Send.cpp:74:11:const int CAN_Send::getLength()	1
+../Core/CAN_Send.cpp:81:6:void CAN_Send::setTxData(uint8_t*)	2
+../Core/CAN_Send.cpp:88:11:uint8_t& CAN_Send::getData()	1
+../Core/CAN_Send.cpp:99:6:bool CAN_Send::send()	3
