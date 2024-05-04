@@ -21,6 +21,7 @@
  * of the CAN_Init process.*/
 
 class Filter_Config {
+// FIXME: IMPLEMENT ERROR CHECKING FOR ALL OF THE SETTERS AND GETTERS
 
 public:
 	// This is the FilterConfig member variable that will be passed into CAN_Init.
